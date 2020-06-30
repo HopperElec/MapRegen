@@ -1,0 +1,11 @@
+name: Mapregen
+version: ${project.version}
+main: co.uk.hopperelec.mc.mapregen.Main
+api-version: 1.14
+prefix: BeatSaber
+authors: [HopperElecYT]
+description: Minigame by HopperElecYT to see if you can build faster than the world is destroyed!
+website: hopperelec.co.uk
+commands:
+    mapregen:
+        description: MapRegen core command
