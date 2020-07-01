@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class PartyCommands {
-    String pre = "§l§4[§cMapRegen§4]§r§7";
+    String pre = "§4[§cMapRegen§4]§r§7 ";
 
     public void command(Player author, String[] args) {
         if (args.length == 1 || args[1].equalsIgnoreCase("help")) {
@@ -104,7 +104,7 @@ public class PartyCommands {
                             player.sendMessage(pre+author.getDisplayName()+" has moved to a new Map Regen party!");}}}}
 
         } else if (args[1].equalsIgnoreCase("list")) {
-            StringBuilder message = new StringBuilder("§lMembers of the current party: "+author.getDisplayName());
+            StringBuilder message = new StringBuilder("§lMembers of the current party: §r§7"+author.getDisplayName());
             for (List<Player> party : Main.getParties()) {
                 if (party.contains(author)) {
                     for (Player player : party) {
@@ -113,7 +113,7 @@ public class PartyCommands {
 
         } else if (args[1].equalsIgnoreCase("getinvites")) {
             for (Player inviter : Main.getInvites().keySet()) {
-                StringBuilder message = new StringBuilder("§lInvites from "+inviter.getDisplayName()+": ");
+                StringBuilder message = new StringBuilder("§lInvites from "+inviter.getDisplayName()+": §r§7");
                 for (Player invitee : Main.getInvites().get(inviter)) {
                     message.append(", ").append(invitee.getDisplayName());}
                 author.sendMessage(pre+ message);}
