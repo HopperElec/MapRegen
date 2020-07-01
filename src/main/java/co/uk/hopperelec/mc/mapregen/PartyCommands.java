@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class PartyCommands {
+    String pre = "§l§4[§cBeatSaber§4]";
+
     public void command(Player author, String[] args) {
         if (args.length == 1 || args[1].equalsIgnoreCase("help")) {
             author.sendMessage("§0§l-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
@@ -30,8 +32,8 @@ public class PartyCommands {
                             online = true;inviter = player;party = tempParty;}}}
                 if (online) {
                     if (Main.getInvites().get(inviter).contains(author)) {
-                        author.sendMessage("Accepting invite request from "+inviter.getDisplayName());
-                        inviter.sendMessage(author.getDisplayName()+" has accepted your invite to your Map Regen party!");
+                        author.sendMessage(pre+"Accepting invite request from "+inviter.getDisplayName());
+                        inviter.sendMessage(pre+author.getDisplayName()+" has accepted your invite to your Map Regen party!");
                         Main.getInvites().get(inviter).remove(author);
                         party.add(author);
                         for (List<Player> tempParty : Main.getParties()) {
@@ -41,15 +43,17 @@ public class PartyCommands {
                                     Main.getParties().remove(tempParty);
                                 } else {
                                     for (Player player : tempParty) {
-                                        player.sendMessage(author.getDisplayName()+" has moved to a new Map Regen party!");}}}}
+                                        player.sendMessage(pre+author.getDisplayName()+" has moved to a new Map Regen party!");}}}}
                         for (Player player : party) {
                             if (player != author) {
-                                player.sendMessage(author.getDisplayName()+" has joined the party!");}}
+                                player.sendMessage(pre+author.getDisplayName()+" has joined the party!");}}
+                    } else if (inviter == author) {
+                        author.sendMessage(pre+"You can't join yourself, silly!");
                     } else {
-                        author.sendMessage("Sending invite request to "+inviter.getDisplayName());
-                        inviter.sendMessage(author.getDisplayName()+" would like to join your Map Regen party. Use /mapregen party invite "+author.getDisplayName());}
-                } else {author.sendMessage("That player doesn't appear to be online!");}
-            } else {author.sendMessage("/mapregen party join (inviter)");}
+                        author.sendMessage(pre+"Sending invite request to "+inviter.getDisplayName());
+                        inviter.sendMessage(pre+author.getDisplayName()+" would like to join your Map Regen party. Use /mapregen party invite "+author.getDisplayName());}
+                } else {author.sendMessage(pre+"That player doesn't appear to be online!");}
+            } else {author.sendMessage(pre+"/mapregen party join (inviter)");}
 
         } else if (args[1].equalsIgnoreCase("invite")) {
             if (args.length == 3) {
@@ -61,15 +65,17 @@ public class PartyCommands {
                             online = true;invitee = player;}}}
                 if (online) {
                     if (Main.getInvites().get(author).contains(invitee)) {
-                        author.sendMessage("You've already invited this person to your party!");
+                        author.sendMessage(pre+"You've already invited this person to your party!");
+                    } else if (invitee == author) {
+                        author.sendMessage(pre+"You can't invite yourself, silly!");
                     } else {
-                        invitee.sendMessage(author.getDisplayName()+" has invited you to their Map Regen party. Use /mapregen party join "+author.getDisplayName()+" to accept.");
+                        invitee.sendMessage(pre+author.getDisplayName()+" has invited you to their Map Regen party. Use /mapregen party join "+author.getDisplayName()+" to accept.");
                         for (List<Player> party : Main.getParties()) {
                             if (party.contains(author)) {
                                 for (Player player : party) {
-                                    player.sendMessage(author.getDisplayName()+" has invited "+invitee.getDisplayName()+" to the Map Regen party");}}}}
-                } else {author.sendMessage("That player doesn't appear to be online!");}
-            } else {author.sendMessage("/mapregen party invite (invitee)");}
+                                    player.sendMessage(pre+author.getDisplayName()+" has invited "+invitee.getDisplayName()+" to the Map Regen party");}}}}
+                } else {author.sendMessage(pre+"That player doesn't appear to be online!");}
+            } else {author.sendMessage(pre+"/mapregen party invite (invitee)");}
 
         } else if (args[1].equalsIgnoreCase("uninvite")) {
             if (args.length == 3) {
@@ -77,25 +83,25 @@ public class PartyCommands {
                 for (Player invitee : Main.getInvites().get(author)) {
                     if (args[2].equalsIgnoreCase(invitee.getDisplayName())) {
                         Main.getInvites().get(author).remove(invitee);
-                        invitee.sendMessage(author.getDisplayName()+" has removed their invite to you from their Map Regen party!");
+                        invitee.sendMessage(pre+author.getDisplayName()+" has removed their invite to you from their Map Regen party!");
                         for (List<Player> party : Main.getParties()) {
                             if (party.contains(author)) {
                                 for (Player player : party) {
-                                    player.sendMessage(author.getDisplayName()+" has removed their invite to "+invitee.getDisplayName()+" from the Map Regen party");}}}
+                                    player.sendMessage(pre+author.getDisplayName()+" has removed their invite to "+invitee.getDisplayName()+" from the Map Regen party");}}}
                         invited = true;}}
-                if (!invited) {author.sendMessage("This player isn't in your invites!");}
-            } else {author.sendMessage("/mapregen party uninvite (invitee)");}
+                if (!invited) {author.sendMessage(pre+"This player isn't in your invites!");}
+            } else {author.sendMessage(pre+"/mapregen party uninvite (invitee)");}
 
         } else if (args[1].equalsIgnoreCase("leave")) {
             for (List<Player> party : Main.getParties()) {
                 if (party.contains(author)) {
-                    if (party.size() == 1) {author.sendMessage("You weren't in a party!");
+                    if (party.size() == 1) {author.sendMessage(pre+"You weren't in a party!");
                     } else {
                         party.remove(author);
                         Main.getParties().add(new ArrayList<>(Collections.singletonList(author)));
-                        author.sendMessage("You have been moved into a new party.");
+                        author.sendMessage(pre+"You have been moved into a new party.");
                         for (Player player : party) {
-                            player.sendMessage(author.getDisplayName()+" has moved to a new Map Regen party!");}}}}
+                            player.sendMessage(pre+author.getDisplayName()+" has moved to a new Map Regen party!");}}}}
 
         } else if (args[1].equalsIgnoreCase("list")) {
             StringBuilder message = new StringBuilder("§lMembers of the current party: "+author.getDisplayName());
@@ -103,15 +109,15 @@ public class PartyCommands {
                 if (party.contains(author)) {
                     for (Player player : party) {
                         if (player != author) {message.append(", ").append(player.getDisplayName());}}}}
-            author.sendMessage(String.valueOf(message));
+            author.sendMessage(pre+ message);
 
         } else if (args[1].equalsIgnoreCase("getinvites")) {
             for (Player inviter : Main.getInvites().keySet()) {
                 StringBuilder message = new StringBuilder("§lInvites from "+inviter.getDisplayName()+": ");
                 for (Player invitee : Main.getInvites().get(inviter)) {
                     message.append(", ").append(invitee.getDisplayName());}
-                author.sendMessage(String.valueOf(message));}
+                author.sendMessage(pre+ message);}
 
-        } else {author.sendMessage("Invalid party command.");}
+        } else {author.sendMessage(pre+"Invalid party command.");}
     }
 }
