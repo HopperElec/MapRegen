@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class PartyCommands {
-    String pre = "§l§4[§cBeatSaber§4]";
+    String pre = "§l§4[§cMapRegen§4]§r§7";
 
     public void command(Player author, String[] args) {
         if (args.length == 1 || args[1].equalsIgnoreCase("help")) {
