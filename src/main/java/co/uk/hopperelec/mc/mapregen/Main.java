@@ -14,17 +14,12 @@ import java.util.List;
 public final class Main extends JavaPlugin {
     public static Plugin plugin = null;
     static List<List<Player>> parties = new ArrayList<>();
-    static Hashtable<Player, List<Player>> invites = new Hashtable<>();
+    static Hashtable<Player,List<Player>> invites = new Hashtable<>();
     StartCommand startCommand = new StartCommand();
     PartyCommands partyCommands = new PartyCommands();
 
-    public static List<List<Player>> getParties() {
-        return parties;
-    }
-
-    public static Hashtable<Player, List<Player>> getInvites() {
-        return invites;
-    }
+    public static List<List<Player>> getParties() {return parties;}
+    public static Hashtable<Player,List<Player>> getInvites() {return invites;}
 
     @Override
     public void onEnable() {
@@ -33,8 +28,7 @@ public final class Main extends JavaPlugin {
     }
 
     @Override
-    public void onDisable() {
-    }
+    public void onDisable() {}
 
     @Override
     public boolean onCommand(CommandSender author, Command cmd, String label, String[] args) { // Event when the player enters a command.
@@ -49,12 +43,8 @@ public final class Main extends JavaPlugin {
                 startCommand.command((Player) author);
             } else if (args[0].equalsIgnoreCase("party")) {
                 partyCommands.command((Player) author, args);
-            } else {
-                return false;
-            }
+            } else {return false;}
             return true;
-        } else {
-            return false;
-        }
+        } else {return false;}
     }
 }
