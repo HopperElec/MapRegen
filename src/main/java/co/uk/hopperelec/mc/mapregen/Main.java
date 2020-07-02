@@ -13,17 +13,18 @@ import java.util.List;
 
 public final class Main extends JavaPlugin {
     public static Plugin plugin = null;
-    static List<List<Player>> parties = new ArrayList<>();
-    static Hashtable<Player,List<Player>> invites = new Hashtable<>();
+    List<List<Player>> parties = new ArrayList<>();
+    Hashtable<Player,List<Player>> invites = new Hashtable<>();
     StartCommand startCommand = new StartCommand();
     PartyCommands partyCommands = new PartyCommands();
 
-    public static List<List<Player>> getParties() {return parties;}
-    public static Hashtable<Player,List<Player>> getInvites() {return invites;}
+    public List<List<Player>> getParties() {return parties;}
+    public Hashtable<Player,List<Player>> getInvites() {return invites;}
+    public Plugin getPlugin() {return plugin;}
 
     @Override
     public void onEnable() {
-        Bukkit.getServer().getPluginManager().registerEvents(new Events(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new Events(this), this);
         plugin = this;
     }
 
@@ -40,9 +41,9 @@ public final class Main extends JavaPlugin {
                 author.sendMessage("§e§l/mapregen party §r§4- §eLists Map Regen party commands");
                 author.sendMessage("§0§l-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
             } else if (args[0].equalsIgnoreCase("start")) {
-                startCommand.command((Player) author);
+                startCommand.command(this, (Player) author);
             } else if (args[0].equalsIgnoreCase("party")) {
-                partyCommands.command((Player) author, args);
+                partyCommands.command(this, (Player) author, args);
             } else {return false;}
             return true;
         } else {return false;}
