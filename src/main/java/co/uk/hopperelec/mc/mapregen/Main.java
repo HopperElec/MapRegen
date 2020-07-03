@@ -32,7 +32,7 @@ public final class Main extends JavaPlugin {
     public void onDisable() {}
 
     @Override
-    public boolean onCommand(CommandSender author, Command cmd, String label, String[] args) { // Event when the player enters a command.
+    public boolean onCommand(CommandSender author, Command cmd, String label, String[] args) {
         if (author instanceof Player) {
             if (args.length == 0) {
                 author.sendMessage("§0§l-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
