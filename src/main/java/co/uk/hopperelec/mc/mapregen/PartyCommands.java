@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class PartyCommands {
     String pre = "§4[§cMapRegen§4]§r§7 ";
@@ -36,14 +37,15 @@ public class PartyCommands {
                         inviter.sendMessage(pre+author.getDisplayName()+" has accepted your invite to your Map Regen party!");
                         Main.getInvites().get(inviter).remove(author);
                         party.add(author);
-                        for (List<Player> tempParty : Main.getParties()) {
-                            if (tempParty.contains(author)) {
-                                tempParty.remove(author);
-                                if (tempParty.size() == 0) {
-                                    Main.getParties().remove(tempParty);
-                                } else {
-                                    for (Player player : tempParty) {
-                                        player.sendMessage(pre+author.getDisplayName()+" has moved to a new Map Regen party!");}}}}
+
+                        Optional<List<Player>> tempParty = Main.getParties().stream().filter(it -> it.contains(author)).findAny();
+                        if (tempParty.isPresent()) {
+                            tempParty.get().remove(author);
+                            if (tempParty.get().size() == 0) {Main.getParties().remove(tempParty.get());
+                            } else {
+                                for (Player player : tempParty.get()) {
+                                    player.sendMessage(pre+author.getDisplayName()+" has moved to a new Map Regen party!");}}}
+
                         for (Player player : party) {
                             if (player != author) {
                                 player.sendMessage(pre+author.getDisplayName()+" has joined the party!");}}
