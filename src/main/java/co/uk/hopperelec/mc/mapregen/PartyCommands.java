@@ -9,7 +9,7 @@ import java.util.List;
 public class PartyCommands {
     String pre = "§4[§cMapRegen§4]§r§7 ";
 
-    public void command(Player author, String[] args) {
+    public boolean command(Player author, String[] args) {
         if (args.length == 1 || args[1].equalsIgnoreCase("help")) {
             author.sendMessage("§0§l-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
             author.sendMessage("§e§l/mapregen party§r§4- §eShows this help message");
@@ -69,6 +69,7 @@ public class PartyCommands {
                     } else if (invitee == author) {
                         author.sendMessage(pre+"You can't invite yourself, silly!");
                     } else {
+                        Main.getInvites().get(author).add(invitee);
                         invitee.sendMessage(pre+author.getDisplayName()+" has invited you to their Map Regen party. Use /mapregen party join "+author.getDisplayName()+" to accept.");
                         for (List<Player> party : Main.getParties()) {
                             if (party.contains(author)) {
@@ -111,13 +112,7 @@ public class PartyCommands {
                         if (player != author) {message.append(", ").append(player.getDisplayName());}}}}
             author.sendMessage(pre+ message);
 
-        } else if (args[1].equalsIgnoreCase("getinvites")) {
-            for (Player inviter : Main.getInvites().keySet()) {
-                StringBuilder message = new StringBuilder("§lInvites from "+inviter.getDisplayName()+": §r§7");
-                for (Player invitee : Main.getInvites().get(inviter)) {
-                    message.append(", ").append(invitee.getDisplayName());}
-                author.sendMessage(pre+ message);}
-
-        } else {author.sendMessage(pre+"Invalid party command.");}
+        } else {author.sendMessage(pre+"Invalid party command."); return false;}
+        return true;
     }
 }

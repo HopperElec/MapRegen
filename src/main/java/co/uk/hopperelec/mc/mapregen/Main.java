@@ -43,8 +43,10 @@ public class Main extends JavaPlugin {
             } else if (args[0].equalsIgnoreCase("start")) {
                 startCommand.command((Player) author);
             } else if (args[0].equalsIgnoreCase("party")) {
-                partyCommands.command((Player) author, args);
-            } else {return false;}
+                return partyCommands.command((Player) author, args);
+            } else {
+                author.sendMessage("§4[§cMapRegen§4]§r§7 Invalid party command.");
+                return false;}
             return true;
         } else {return false;}
     }
