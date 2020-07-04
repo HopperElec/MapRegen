@@ -7,23 +7,24 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public final class Main extends JavaPlugin {
+public class Main extends JavaPlugin {
     public static Plugin plugin = null;
-    List<List<Player>> parties = new ArrayList<>();
-    Hashtable<Player,List<Player>> invites = new Hashtable<>();
+    static List<List<Player>> parties = new ArrayList<>();
+    static Map<Player,List<Player>> invites = new HashMap<>();
     StartCommand startCommand = new StartCommand();
     PartyCommands partyCommands = new PartyCommands();
 
-    public List<List<Player>> getParties() {return parties;}
-    public Hashtable<Player,List<Player>> getInvites() {return invites;}
+    public static List<List<Player>> getParties() {return parties;}
+    public static Map<Player,List<Player>> getInvites() {return invites;}
     public Plugin getPlugin() {return plugin;}
 
     @Override
     public void onEnable() {
-        getServer().getPluginManager().registerEvents(new Events(this), this);
+        getServer().getPluginManager().registerEvents(new Events(), this);
         plugin = this;
     }
 
@@ -40,9 +41,9 @@ public final class Main extends JavaPlugin {
                 author.sendMessage("§e§l/mapregen party §r§4- §eLists Map Regen party commands");
                 author.sendMessage("§0§l-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
             } else if (args[0].equalsIgnoreCase("start")) {
-                startCommand.command(this, (Player) author);
+                startCommand.command((Player) author);
             } else if (args[0].equalsIgnoreCase("party")) {
-                partyCommands.command(this, (Player) author, args);
+                partyCommands.command((Player) author, args);
             } else {return false;}
             return true;
         } else {return false;}
